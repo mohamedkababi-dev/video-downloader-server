@@ -1,13 +1,14 @@
 const express = require("express");
 const ytdl = require("ytdl-core");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 app.use(cors());
 
-// الصفحة الرئيسية
+// الصفحة الرئيسية (واجهة الموقع)
 app.get("/", (req, res) => {
-  res.send("Server is working 🚀");
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 // تحميل فيديو
@@ -17,7 +18,7 @@ app.get("/download", async (req, res) => {
 
     if (!url) return res.send("❌ ضع رابط الفيديو");
 
-    // تنظيف الرابط (حذف ?si أو أي إضافات)
+    // تنظيف الرابط (يحذف ?si وغيرها)
     url = url.split("&")[0];
 
     if (!ytdl.validateURL(url)) {
@@ -56,6 +57,7 @@ app.get("/mp3", async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
-  console.log("Server running on port " + PORT);
+  console.log("🚀 Server running on port " + PORT);
 });
