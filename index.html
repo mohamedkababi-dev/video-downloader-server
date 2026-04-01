@@ -3,52 +3,97 @@
 <head>
   <meta charset="UTF-8">
   <title>Video Downloader</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
+      background: #0f172a;
+      color: white;
       font-family: Arial;
       text-align: center;
-      background: #111;
-      color: white;
       padding: 50px;
     }
-    input {
-      width: 80%;
-      padding: 10px;
-      margin: 10px;
-      border-radius: 10px;
-      border: none;
+
+    h1 {
+      font-size: 30px;
+      margin-bottom: 30px;
     }
-    button {
-      padding: 10px 20px;
-      margin: 10px;
+
+    input {
+      width: 90%;
+      max-width: 500px;
+      padding: 12px;
       border-radius: 10px;
       border: none;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 12px 20px;
+      margin: 5px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
       cursor: pointer;
     }
-    .btn1 { background: green; color: white; }
-    .btn2 { background: blue; color: white; }
+
+    .video {
+      background: #16a34a;
+      color: white;
+    }
+
+    .mp3 {
+      background: #2563eb;
+      color: white;
+    }
+
+    .msg {
+      margin-top: 20px;
+      color: #f87171;
+    }
   </style>
 </head>
+
 <body>
 
   <h1>🎬 Video Downloader</h1>
 
-  <input id="url" placeholder="ضع رابط يوتيوب هنا">
+  <input id="url" placeholder="ضع رابط الفيديو هنا">
 
   <br>
 
-  <button class="btn1" onclick="downloadVideo()">تحميل فيديو</button>
-  <button class="btn2" onclick="downloadMP3()">تحميل MP3</button>
+  <button class="video" onclick="downloadVideo()">تحميل فيديو</button>
+  <button class="mp3" onclick="downloadMP3()">تحميل MP3</button>
+
+  <div class="msg" id="msg"></div>
 
   <script>
+    function getUrl() {
+      const url = document.getElementById("url").value.trim();
+      if (!url) {
+        showMsg("❌ ضع رابط أولا");
+        return null;
+      }
+      return url;
+    }
+
+    function showMsg(text) {
+      document.getElementById("msg").innerText = text;
+    }
+
     function downloadVideo() {
-      let url = document.getElementById("url").value;
-      window.location.href = "/download?url=" + encodeURIComponent(url);
+      const url = getUrl();
+      if (!url) return;
+
+      window.open(`/download?url=${encodeURIComponent(url)}`, "_blank");
     }
 
     function downloadMP3() {
-      let url = document.getElementById("url").value;
-      window.location.href = "/mp3?url=" + encodeURIComponent(url);
+      const url = getUrl();
+      if (!url) return;
+
+      window.open(`/mp3?url=${encodeURIComponent(url)}`, "_blank");
     }
   </script>
 
