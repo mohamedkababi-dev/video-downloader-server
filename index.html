@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>Video Downloader</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background: #111;
+      color: white;
+      padding: 50px;
+    }
+    input {
+      width: 80%;
+      padding: 10px;
+      margin: 10px;
+      border-radius: 10px;
+      border: none;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+    }
+    .btn1 { background: green; color: white; }
+    .btn2 { background: blue; color: white; }
+  </style>
+</head>
+<body>
+
+  <h1>🎬 Video Downloader</h1>
+
+  <input id="url" placeholder="ضع رابط يوتيوب هنا">
+
+  <br>
+
+  <button class="btn1" onclick="downloadVideo()">تحميل فيديو</button>
+  <button class="btn2" onclick="downloadMP3()">تحميل MP3</button>
+
+  <script>
+    function downloadVideo() {
+      let url = document.getElementById("url").value;
+      window.location.href = "/download?url=" + encodeURIComponent(url);
+    }
+
+    function downloadMP3() {
+      let url = document.getElementById("url").value;
+      window.location.href = "/mp3?url=" + encodeURIComponent(url);
+    }
+  </script>
+
+</body>
+</html>
