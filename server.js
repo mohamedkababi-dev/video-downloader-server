@@ -1,9 +1,16 @@
 const express = require("express");
 const axios = require("axios");
+const path = require("path");
 
 const app = express();
 
+// قراءة الملفات من public
 app.use(express.static("public"));
+
+// الصفحة الرئيسية
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
 
 // تحميل فيديو
 app.get("/video", async (req, res) => {
@@ -19,9 +26,9 @@ app.get("/video", async (req, res) => {
       url: "https://youtube-media-downloader.p.rapidapi.com/v2/video/details",
       params: { url: url },
       headers: {
-        "X-RapidAPI-Key": "PUT_YOUR_API_KEY_HERE",
-        "X-RapidAPI-Host": "youtube-media-downloader.p.rapidapi.com",
-      },
+        "X-RapidAPI-Key": "48e08bf7d8msh02b813193f67b52p1788b5jsn890a5bd6e153",
+        "X-RapidAPI-Host": "youtube-media-downloader.p.rapidapi.com"
+      }
     };
 
     const response = await axios.request(options);
@@ -33,6 +40,7 @@ app.get("/video", async (req, res) => {
     }
 
     res.redirect(video);
+
   } catch (err) {
     res.send("❌ خطأ في تحميل الفيديو");
   }
@@ -53,8 +61,8 @@ app.get("/mp3", async (req, res) => {
       params: { url: url },
       headers: {
         "X-RapidAPI-Key": "48e08bf7d8msh02b813193f67b52p1788b5jsn890a5bd6e153",
-        "X-RapidAPI-Host": "youtube-media-downloader.p.rapidapi.com",
-      },
+        "X-RapidAPI-Host": "youtube-media-downloader.p.rapidapi.com"
+      }
     };
 
     const response = await axios.request(options);
@@ -66,12 +74,14 @@ app.get("/mp3", async (req, res) => {
     }
 
     res.redirect(audio);
+
   } catch (err) {
     res.send("❌ خطأ في تحميل MP3");
   }
 });
 
 const PORT = process.env.PORT || 10000;
+
 app.listen(PORT, () => {
   console.log("Server running on port " + PORT);
 });
